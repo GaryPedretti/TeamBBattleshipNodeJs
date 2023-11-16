@@ -5,6 +5,7 @@ const cliColor = require('cli-color');
 const beep = require('beepbeep');
 const position = require("./GameController/position.js");
 const letters = require("./GameController/letters.js");
+const displayMenu = require("./GameController/menu.js")
 let telemetryWorker;
 
 class Battleship {
@@ -47,6 +48,7 @@ class Battleship {
         console.log("    \"\"\"\"");
 
         do {
+            displayMenu(this.myFleet, this.enemyFleet);
             console.log();
             console.log("Player, it's your turn");
             console.log("Enter coordinates for your shot :");
