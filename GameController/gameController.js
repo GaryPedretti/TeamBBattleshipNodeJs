@@ -30,6 +30,10 @@ class GameController {
     static isShipValid(ship) {
         return ship.positions.length == ship.size;
     }
+    static changeColor(ship, colors){
+
+
+     }
 }
 
 module.exports = GameController;

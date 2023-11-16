@@ -58,20 +58,14 @@ class Battleship {
             telemetryWorker.postMessage({eventName: 'Player_ShootPosition', properties:  {Position: position.toString(), IsHit: isHit}});
 
             if (isHit) {
-                beep();
-
-                console.log("                \\         .  ./");
-                console.log("              \\      .:\";'.:..\"   /");
-                console.log("                  (M^^.^~~:.'\").");
-                console.log("            -   (/  .    . . \\ \\)  -");
-                console.log("               ((| :. ~ ^  :. .|))");
-                console.log("            -   (\\- |  \\ /  |  /)  -");
-                console.log("                 -\\  \\     /  /-");
-                console.log("                   \\  \\   /  /");
+                this.displayHit();
+            }
+            else{
+                this.displayMiss();
             }
 
-            console.log(isHit ? "Yeah ! Nice hit !" : "Miss");
-
+            console.log(isHit ? "Yeah ! Nice hit !" : "Too Bad , You Missed");
+            this.addSpace();
             var computerPos = this.GetRandomPosition();
             var isHit = gameController.CheckIsHit(this.myFleet, computerPos);
 
@@ -80,21 +74,46 @@ class Battleship {
             console.log();
             console.log(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (isHit ? `has hit your ship !` : `miss`));
             if (isHit) {
-                beep();
-
-                console.log("                \\         .  ./");
-                console.log("              \\      .:\";'.:..\"   /");
-                console.log("                  (M^^.^~~:.'\").");
-                console.log("            -   (/  .    . . \\ \\)  -");
-                console.log("               ((| :. ~ ^  :. .|))");
-                console.log("            -   (\\- |  \\ /  |  /)  -");
-                console.log("                 -\\  \\     /  /-");
-                console.log("                   \\  \\   /  /");
+               this.displayHit();
+            }
+            else{
+                this.displayMiss();
             }
         }
         while (true);
     }
+    addSpace(){
+        console.log(cliColor.red("                                      "));
+        console.log(cliColor.red("                                      "));
+        console.log(cliColor.black(" ......................................"));
+        console.log(cliColor.red("                                      "));
+        console.log(cliColor.red("                                      "));
+    }
 
+    displayHit(){
+        beep();
+
+        console.log(cliColor.red("                \\         .  ./"));
+        console.log(cliColor.red("              \\      .:\";'.:..\"   /"));
+        console.log(cliColor.red("                  (M^^.^~~:.'\")."));
+        console.log(cliColor.red("            -   (/  .    . . \\ \\)  -"));
+        console.log(cliColor.red("               ((| :. ~ ^  :. .|))"));
+        console.log(cliColor.red("            -   (\\- |  \\ /  |  /)  -"));
+        console.log(cliColor.red("                 -\\  \\     /  /-"));
+        console.log(cliColor.red("                   \\  \\   /  /"));
+    }
+    displayMiss(){
+        beep();
+
+        console.log(cliColor.blue("                ==="));
+        console.log(cliColor.blue("           ============="));
+        console.log(cliColor.blue("       ======================"));
+        console.log(cliColor.blue("      ==========================="));
+        console.log(cliColor.blue("     =============================="));
+        console.log(cliColor.blue("    ==================================="));
+        console.log(cliColor.blue("   ======================================="));
+        console.log(cliColor.blue(" ============================================"));
+    }
     static ParsePosition(input) {
         var letter = letters.get(input.toUpperCase().substring(0, 1));
         var number = parseInt(input.substring(1, 2), 10);
