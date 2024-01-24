@@ -76,7 +76,7 @@ class Battleship {
                         console.log(cliColor.red("     ***      "));
                         console.log(cliColor.red("    *****     "));
                         console.log()
-                        console.log(cliColor.redBright("The ships B4, B5, B6, B7, B8 has been sunk"));
+                        console.log(cliColor.redBright("The ships Aircraft Carrier B4, B5, B6, B7, B8 has been sunk"));
                         console.log();
                         console.log(cliColor.red("    *****     "));
                         console.log(cliColor.red("     ***      "));
