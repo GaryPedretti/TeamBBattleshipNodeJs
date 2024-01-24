@@ -32,7 +32,7 @@ describe('checkIsHitTests', function () {
     assert.strictEqual(actual, false);
   });
 
-  it('should throw an exception if positstion is undefined', function () {
+  it('should throw an exception if position is undefined', function () {
     var ships = gameController.InitializeShips();
     assert.throws(
       () => {
@@ -48,4 +48,14 @@ describe('checkIsHitTests', function () {
       }
     )
   });
+
+  it('should return green color if a ship is hitted', function () {
+
+  });
+
+  it('should return green color if a ship is hitted', function () {
+    
+  });
+
 });
+

@@ -58,17 +58,17 @@ class Battleship {
             if (isHit) {
                 beep();
 
-                console.log("                \\         .  ./");
-                console.log("              \\      .:\";'.:..\"   /");
-                console.log("                  (M^^.^~~:.'\").");
-                console.log("            -   (/  .    . . \\ \\)  -");
-                console.log("               ((| :. ~ ^  :. .|))");
-                console.log("            -   (\\- |  \\ /  |  /)  -");
-                console.log("                 -\\  \\     /  /-");
-                console.log("                   \\  \\   /  /");
+                console.log(cliColor.green("                \\         .  ./"));
+                console.log(cliColor.green("              \\      .:\";'.:..\"   /"));
+                console.log(cliColor.green("                  (M^^.^~~:.'\")."));
+                console.log(cliColor.green("            -   (/  .    . . \\ \\)  -"));
+                console.log(cliColor.green("               ((| :. ~ ^  :. .|))"));
+                console.log(cliColor.green("            -   (\\- |  \\ /  |  /)  -"));
+                console.log(cliColor.green("                 -\\  \\     /  /-"));
+                console.log(cliColor.green("                   \\  \\   /  /"));
             }
 
-            console.log(isHit ? "Yeah ! Nice hit !" : "Miss");
+            console.log(isHit ? cliColor.bgYellow.white("Yeah ! Nice ") + cliColor.bgGreen.whiteBright(" hit ") : cliColor.bgRed.whiteBright(" Miss "));
 
             var computerPos = this.GetRandomPosition();
             var isHit = gameController.CheckIsHit(this.myFleet, computerPos);
@@ -76,18 +76,18 @@ class Battleship {
             telemetryWorker.postMessage({eventName: 'Computer_ShootPosition', properties:  {Position: computerPos.toString(), IsHit: isHit}});
 
             console.log();
-            console.log(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (isHit ? `has hit your ship !` : `miss`));
+            console.log(cliColor.bgYellow.white(`Computer shot in ${computerPos.column}${computerPos.row} and `) + (isHit ? cliColor.bgYellow.whiteBright(`has`) + cliColor.bgGreen.whiteBright(" hit ") + cliColor.bgYellow.white(`your ship !`) : cliColor.bgRed.whiteBright(` miss `)));
             if (isHit) {
                 beep();
 
-                console.log("                \\         .  ./");
-                console.log("              \\      .:\";'.:..\"   /");
-                console.log("                  (M^^.^~~:.'\").");
-                console.log("            -   (/  .    . . \\ \\)  -");
-                console.log("               ((| :. ~ ^  :. .|))");
-                console.log("            -   (\\- |  \\ /  |  /)  -");
-                console.log("                 -\\  \\     /  /-");
-                console.log("                   \\  \\   /  /");
+                console.log(cliColor.green("                \\         .  ./"));
+                console.log(cliColor.green("              \\      .:\";'.:..\"   /"));
+                console.log(cliColor.green("                  (M^^.^~~:.'\")."));
+                console.log(cliColor.green("            -   (/  .    . . \\ \\)  -"));
+                console.log(cliColor.green("               ((| :. ~ ^  :. .|))"));
+                console.log(cliColor.green("            -   (\\- |  \\ /  |  /)  -"));
+                console.log(cliColor.green("                 -\\  \\     /  /-"));
+                console.log(cliColor.green("                   \\  \\   /  /"));
             }
         }
         while (true);
