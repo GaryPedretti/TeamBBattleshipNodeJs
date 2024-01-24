@@ -7,6 +7,8 @@ const position = require("./GameController/position.js");
 const letters = require("./GameController/letters.js");
 let telemetryWorker;
 
+let shipHitted = [];
+
 class Battleship {
     start() {
         telemetryWorker = new Worker("./TelemetryClient/telemetryClient.js");   
@@ -35,16 +37,16 @@ class Battleship {
 
     StartGame() {
         console.clear();
-        console.log("                  __");
-        console.log("                 /  \\");
-        console.log("           .-.  |    |");
-        console.log("   *    _.-'  \\  \\__/");
-        console.log("    \\.-'       \\");
-        console.log("   /          _/");
-        console.log("  |      _  /");
-        console.log("  |     /_\\'");
-        console.log("   \\    \\_/");
-        console.log("    \"\"\"\"");
+        console.log(cliColor.green("                  __"));
+        console.log(cliColor.green("                 /  \\"));
+        console.log(cliColor.green("           .-.  |    |"));
+        console.log(cliColor.green("   *    _.-'  \\  \\__/"));
+        console.log(cliColor.green("    \\.-'       \\"));
+        console.log(cliColor.green("   /          _/"));
+        console.log(cliColor.green("  |      _  /"));
+        console.log(cliColor.green("  |     /_\\'"));
+        console.log(cliColor.green("   \\    \\_/"));
+        console.log(cliColor.green("    \"\"\"\""));
 
         do {
             console.log();
@@ -66,6 +68,21 @@ class Battleship {
                 console.log(cliColor.red("            -   (\\- |  \\ /  |  /)  -"));
                 console.log(cliColor.red("                 -\\  \\     /  /-"));
                 console.log(cliColor.red("                   \\  \\   /  /"));
+
+                shipHitted.push(position.toString());
+
+                if(shipHitted.includes('B4', 'B5', 'B6', 'B7', 'B8') && shipHitted.length >= 5){
+                        console.log(cliColor.red("      *       "));
+                        console.log(cliColor.red("     ***      "));
+                        console.log(cliColor.red("    *****     "));
+                        console.log()
+                        console.log(cliColor.redBright("The ships B4, B5, B6, B7, B8 has been sunk"));
+                        console.log();
+                        console.log(cliColor.red("    *****     "));
+                        console.log(cliColor.red("     ***      "));
+                        console.log(cliColor.red("      *       "));
+
+                }
             }
 
             console.log(isHit ? cliColor.bgYellow.white("Yeah ! Nice ") + cliColor.bgRed.whiteBright(" hit ") : cliColor.bgBlue.whiteBright(" Miss "));
