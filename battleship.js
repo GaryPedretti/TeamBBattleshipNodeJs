@@ -25,8 +25,9 @@ class Battleship {
         console.log(cliColor.magenta("                    +---------------___[}-_===_.'____                 /\\"));
         console.log(cliColor.magenta("                ____`-' ||___-{]_| _[}-  |     |_[___\\==--            \\/   _"));
         console.log(cliColor.magenta(" __..._____--==/___]_|__|_____________________________[___\\==--____,------' .7"));
-        console.log(cliColor.magenta("|                        Welcome to Battleship                         BB-61/"));
+        console.log(cliColor.magenta("|                        WELCOME TO BATTLESHIP                        BB-61/"));
         console.log(cliColor.magenta(" \\_________________________________________________________________________|"));
+        console.log(cliColor.bgBlueBright("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"));
         console.log();
 
         this.InitializeGame();
@@ -48,7 +49,7 @@ class Battleship {
 
         do {
             console.log();
-            console.log("Player, it's your turn");
+            console.log("Player, it's your turn!");
             console.log("Enter coordinates for your shot :");
             var position = Battleship.ParsePosition(readline.question());
             var isHit = gameController.CheckIsHit(this.enemyFleet, position);
@@ -58,17 +59,19 @@ class Battleship {
             if (isHit) {
                 beep();
 
-                console.log("                \\         .  ./");
-                console.log("              \\      .:\";'.:..\"   /");
-                console.log("                  (M^^.^~~:.'\").");
-                console.log("            -   (/  .    . . \\ \\)  -");
-                console.log("               ((| :. ~ ^  :. .|))");
-                console.log("            -   (\\- |  \\ /  |  /)  -");
-                console.log("                 -\\  \\     /  /-");
-                console.log("                   \\  \\   /  /");
+                console.log(cliColor.greenBright("                \\         .  ./"));
+                console.log(cliColor.greenBright("              \\      .:\";'.:..\"   /"));
+                console.log(cliColor.greenBright("                  (M^^.^~~:.'\")."));
+                console.log(cliColor.greenBright("            -   (/  .    . . \\ \\)  -"));
+                console.log(cliColor.greenBright("               ((| :. ~ ^  :. .|))"));
+                console.log(cliColor.greenBright("            -   (\\- |  \\ /  |  /)  -"));
+                console.log(cliColor.greenBright("                 -\\  \\     /  /-"));
+                console.log(cliColor.greenBright("                   \\  \\   /  /"));
+                console.log(cliColor.bgGreenBright("+ < + < + < + < YOU HIT THE ENEMY > + > + > + > +"));
             }
 
-            console.log(isHit ? "Yeah ! Nice hit !" : "Miss");
+            console.log(isHit ? "Nice hit!" : "You missed");
+            console.log();
 
             var computerPos = this.GetRandomPosition();
             var isHit = gameController.CheckIsHit(this.myFleet, computerPos);
@@ -76,18 +79,22 @@ class Battleship {
             telemetryWorker.postMessage({eventName: 'Computer_ShootPosition', properties:  {Position: computerPos.toString(), IsHit: isHit}});
 
             console.log();
-            console.log(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (isHit ? `has hit your ship !` : `miss`));
+            console.log("- ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ -");
+            console.log(cliColor.magenta(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (isHit ? "hit your ship!" : "missed")));
+            console.log("- ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ - ~ -");
+            console.log();
             if (isHit) {
                 beep();
 
-                console.log("                \\         .  ./");
-                console.log("              \\      .:\";'.:..\"   /");
-                console.log("                  (M^^.^~~:.'\").");
-                console.log("            -   (/  .    . . \\ \\)  -");
-                console.log("               ((| :. ~ ^  :. .|))");
-                console.log("            -   (\\- |  \\ /  |  /)  -");
-                console.log("                 -\\  \\     /  /-");
-                console.log("                   \\  \\   /  /");
+                console.log(cliColor.redBright("                \\         .  ./"));
+                console.log(cliColor.redBright("              \\      .:\";'.:..\"   /"));
+                console.log(cliColor.redBright("                  (M^^.^~~:.'\")."));
+                console.log(cliColor.redBright("            -   (/  .    . . \\ \\)  -"));
+                console.log(cliColor.redBright("               ((| :. ~ ^  :. .|))"));
+                console.log(cliColor.redBright("            -   (\\- |  \\ /  |  /)  -"));
+                console.log(cliColor.redBright("                 -\\  \\     /  /-"));
+                console.log(cliColor.redBright("                   \\  \\   /  /"));
+                console.log(cliColor.bgRedBright("* ! * ! * ! * ! YOU'VE BEEN HIT ! * ! * ! * ! *"));
             }
         }
         while (true);
@@ -117,7 +124,7 @@ class Battleship {
     InitializeMyFleet() {
         this.myFleet = gameController.InitializeShips();
 
-        console.log("Please position your fleet (Game board size is from A to H and 1 to 8) :");
+        console.log("Please position your fleet (the game board size is from A to H and 1 to 8) :");
 
         this.myFleet.forEach(function (ship) {
             console.log();
