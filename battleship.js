@@ -117,7 +117,16 @@ class Battleship {
     }
 
     InitializeGame() {
-        this.InitializeMyFleet();
+        console.log('Do you want to intialize your own fleet? Y/N');
+        var response = readline.question();
+        //console.log(response);
+        if(response.toUpperCase() == "N"){
+            console.log('made it to the autointialize')
+            this.myFleet = gameController.AutomaticallyInitializeMyFleet();
+        }
+        else{
+            this.InitializeMyFleet();
+        }
         this.InitializeEnemyFleet();
     }
 

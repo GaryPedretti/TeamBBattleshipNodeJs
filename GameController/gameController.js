@@ -1,3 +1,7 @@
+const position = require("./position.js");
+const letters = require("./letters.js");
+
+
 class GameController {
     static InitializeShips() {
         var colors = require("cli-color");
@@ -29,6 +33,34 @@ class GameController {
 
     static isShipValid(ship) {
         return ship.positions.length == ship.size;
+    }
+
+    static AutomaticallyInitializeMyFleet(){
+        this.myFleet = GameController.InitializeShips();
+
+        this.myFleet[0].addPosition(new position(letters.B, 4));
+        this.myFleet[0].addPosition(new position(letters.B, 5));
+        this.myFleet[0].addPosition(new position(letters.B, 6));
+        this.myFleet[0].addPosition(new position(letters.B, 7));
+        this.myFleet[0].addPosition(new position(letters.B, 8));
+
+        this.myFleet[1].addPosition(new position(letters.E, 6));
+        this.myFleet[1].addPosition(new position(letters.E, 7));
+        this.myFleet[1].addPosition(new position(letters.E, 8));
+        this.myFleet[1].addPosition(new position(letters.E, 9));
+
+        this.myFleet[2].addPosition(new position(letters.A, 3));
+        this.myFleet[2].addPosition(new position(letters.B, 3));
+        this.myFleet[2].addPosition(new position(letters.C, 3));
+
+        this.myFleet[3].addPosition(new position(letters.F, 8));
+        this.myFleet[3].addPosition(new position(letters.G, 8));
+        this.myFleet[3].addPosition(new position(letters.H, 8));
+
+        this.myFleet[4].addPosition(new position(letters.C, 5));
+        this.myFleet[4].addPosition(new position(letters.C, 6));
+        
+        return this.myFleet;
     }
 }
 
