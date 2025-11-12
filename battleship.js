@@ -49,8 +49,14 @@ class Battleship {
         do {
             console.log();
             console.log("Player, it's your turn");
-            console.log(cliColor.green("Enter coordinates for your shot :"));
-            var position = Battleship.ParsePosition(readline.question());
+            console.log(cliColor.green("Type exit to quit the game, or your coordinates for your shot"));
+            var answer = readline.question();
+            if (answer.toLowerCase() === "exit") {
+                telemetryWorker.postMessage({eventName: 'ApplicationEnded', properties: {}});
+                console.log("Thanks for playing! Goodbye.");
+                process.exit(0);
+            }
+            var position = Battleship.ParsePosition(answer);
             var isHit = gameController.CheckIsHit(this.enemyFleet, position);
 
             telemetryWorker.postMessage({eventName: 'Player_ShootPosition', properties:  {Position: position.toString(), IsHit: isHit}});
@@ -69,6 +75,8 @@ class Battleship {
             }
 
             console.log(cliColor.red(isHit ? "Yeah ! Nice hit !" : "Miss"));
+        
+            
 
             var computerPos = this.GetRandomPosition();
             var isHit = gameController.CheckIsHit(this.myFleet, computerPos);
