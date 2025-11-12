@@ -28,7 +28,13 @@ class Battleship {
         console.log(cliColor.magenta("|                        Welcome to Battleship                         BB-61/"));
         console.log(cliColor.magenta(" \\_________________________________________________________________________|"));
         console.log();
+        telemetryWorker = new Worker("./TelemetryClient/telemetryClient.js");
 
+        console.log("Starting...");
+        telemetryWorker.postMessage({eventName: 'ApplicationStarted', properties: {Technology: 'Node.js'}});
+
+        // 🎯 Add this line here
+        this.setBoardSize();
         this.InitializeGame();
         this.StartGame();
     }
@@ -95,7 +101,6 @@ class Battleship {
 
 
     setBoardSize() {
-
         
     console.log();
     console.log("Configure your game board:");
@@ -117,13 +122,13 @@ class Battleship {
     }
 
     GetRandomPosition() {
-        var rows = 8;
-        var lines = 8;
-        var rndColumn = Math.floor((Math.random() * lines));
-        var letter = letters.get(rndColumn + 1);
-        var number = Math.floor((Math.random() * rows));
-        var result = new position(letter, number);
-        return result;
+    const rndColumn = Math.floor(Math.random() * this.cols);
+    const rndRow = Math.floor(Math.random() * this.rows);
+
+    const letter = letters.get(rndColumn + 1);
+    const number = rndRow + 1;
+
+    return new position(letter, number);
     }
 
     InitializeGame() {
@@ -134,7 +139,7 @@ class Battleship {
     InitializeMyFleet() {
         this.myFleet = gameController.InitializeShips();
 
-        console.log("Please position your fleet (Game board size is from A to H and 1 to 8) :");
+        console.log(`Please position your fleet (Game board size is from A to ${String.fromCharCode(64 + this.cols)} and 1 to ${this.rows}) :`);
 
         this.myFleet.forEach(function (ship) {
             console.log();
