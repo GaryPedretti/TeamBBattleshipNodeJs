@@ -33,8 +33,7 @@ class Battleship {
         console.log("Starting...");
         telemetryWorker.postMessage({eventName: 'ApplicationStarted', properties: {Technology: 'Node.js'}});
 
-        // 🎯 Add this line here
-        this.setBoardSize();
+        // TODO: Add a size limit       
         this.InitializeGame();
         this.StartGame();
     }
