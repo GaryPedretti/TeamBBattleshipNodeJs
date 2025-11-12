@@ -105,9 +105,36 @@ class Battleship {
     console.log();
     console.log("Configure your game board:");
 
-    // Ask user for number of rows and columns (defaults: 8x8)
-    const rows = parseInt(readline.question("Enter number of rows (default 8): ") || "8", 10);
-    const cols = parseInt(readline.question("Enter number of columns (default 8): ") || "8", 10);
+    const MAX_DIM = 26;
+    const DEFAULT = 8;
+
+    let rows, cols;
+
+    while (true) {
+
+
+        // Ask user for number of rows and columns (defaults: 8x8)
+        rows = parseInt(readline.question("Enter number of rows (default 8): ") || "8", 10);
+        cols = parseInt(readline.question("Enter number of columns (default 8): ") || "8", 10);
+
+        if (Number.isNaN(rows) || Number.isNaN(cols)) {
+            console.log(cliColor.yellow("Rows and columns must be numbers. Please try again."));
+            continue;
+        }
+
+        if (rows < 1 || cols < 1) {
+            console.log(cliColor.yellow("Rows and columns must be at least 1. Please try again."));
+            continue;
+        }
+
+        if (rows > MAX_DIM || cols > MAX_DIM) {
+            console.log(cliColor.yellow(`Rows and columns cannot exceed ${MAX_DIM}. Please enter values between 1 and ${MAX_DIM}.`));
+            continue;
+        }
+
+        // valid values
+        break;
+    }
 
     this.rows = rows;
     this.cols = cols;
