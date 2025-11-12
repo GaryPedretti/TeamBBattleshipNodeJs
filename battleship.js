@@ -28,7 +28,13 @@ class Battleship {
         console.log(cliColor.magenta("|                        Welcome to Battleship                         BB-61/"));
         console.log(cliColor.magenta(" \\_________________________________________________________________________|"));
         console.log();
+        telemetryWorker = new Worker("./TelemetryClient/telemetryClient.js");
 
+        console.log("Starting...");
+        telemetryWorker.postMessage({eventName: 'ApplicationStarted', properties: {Technology: 'Node.js'}});
+
+        // 🎯 Add this line here
+        this.setBoardSize();
         this.InitializeGame();
         this.StartGame();
     }
@@ -101,6 +107,49 @@ class Battleship {
         while (true);
     }
 
+
+    setBoardSize() {
+        
+    console.log();
+    console.log("Configure your game board:");
+
+    const MAX_DIM = 26;
+    const DEFAULT = 8;
+
+    let rows, cols;
+
+    while (true) {
+
+
+        // Ask user for number of rows and columns (defaults: 8x8)
+        rows = parseInt(readline.question("Enter number of rows (default 8): ") || "8", 10);
+        cols = parseInt(readline.question("Enter number of columns (default 8): ") || "8", 10);
+
+        if (Number.isNaN(rows) || Number.isNaN(cols)) {
+            console.log(cliColor.yellow("Rows and columns must be numbers. Please try again."));
+            continue;
+        }
+
+        if (rows < 1 || cols < 1) {
+            console.log(cliColor.yellow("Rows and columns must be at least 1. Please try again."));
+            continue;
+        }
+
+        if (rows > MAX_DIM || cols > MAX_DIM) {
+            console.log(cliColor.yellow(`Rows and columns cannot exceed ${MAX_DIM}. Please enter values between 1 and ${MAX_DIM}.`));
+            continue;
+        }
+
+        // valid values
+        break;
+    }
+
+    this.rows = rows;
+    this.cols = cols;
+
+    console.log(cliColor.green(`Board size set to ${cols} columns (A-${String.fromCharCode(64 + cols)}) and ${rows} rows.`));
+    }
+
     static ParsePosition(input) {
         var letter = letters.get(input.toUpperCase().substring(0, 1));
         var number = parseInt(input.substring(1, 2), 10);
@@ -108,13 +157,13 @@ class Battleship {
     }
 
     GetRandomPosition() {
-        var rows = 8;
-        var lines = 8;
-        var rndColumn = Math.floor((Math.random() * lines));
-        var letter = letters.get(rndColumn + 1);
-        var number = Math.floor((Math.random() * rows));
-        var result = new position(letter, number);
-        return result;
+    const rndColumn = Math.floor(Math.random() * this.cols);
+    const rndRow = Math.floor(Math.random() * this.rows);
+
+    const letter = letters.get(rndColumn + 1);
+    const number = rndRow + 1;
+
+    return new position(letter, number);
     }
 
     InitializeGame() {
@@ -125,7 +174,7 @@ class Battleship {
     InitializeMyFleet() {
         this.myFleet = gameController.InitializeShips();
 
-        console.log(cliColor.cyan("Please position your fleet (Game board size is from A to H and 1 to 8) :"));
+        console.log(`Please position your fleet (Game board size is from A to ${String.fromCharCode(64 + this.cols)} and 1 to ${this.rows}) :`);
 
         this.myFleet.forEach(function (ship) {
             console.log();
