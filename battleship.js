@@ -93,6 +93,23 @@ class Battleship {
         while (true);
     }
 
+
+    setBoardSize() {
+
+        
+    console.log();
+    console.log("Configure your game board:");
+
+    // Ask user for number of rows and columns (defaults: 8x8)
+    const rows = parseInt(readline.question("Enter number of rows (default 8): ") || "8", 10);
+    const cols = parseInt(readline.question("Enter number of columns (default 8): ") || "8", 10);
+
+    this.rows = rows;
+    this.cols = cols;
+
+    console.log(cliColor.green(`Board size set to ${cols} columns (A-${String.fromCharCode(64 + cols)}) and ${rows} rows.`));
+    }
+
     static ParsePosition(input) {
         var letter = letters.get(input.toUpperCase().substring(0, 1));
         var number = parseInt(input.substring(1, 2), 10);
