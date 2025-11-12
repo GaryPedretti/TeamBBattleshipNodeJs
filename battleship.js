@@ -100,8 +100,8 @@ class Battleship {
     }
 
     GetRandomPosition() {
-        var rows = 8;
-        var lines = 8;
+        var rows = 26;
+        var lines = 26;
         var rndColumn = Math.floor((Math.random() * lines));
         var letter = letters.get(rndColumn + 1);
         var number = Math.floor((Math.random() * rows));
@@ -117,7 +117,7 @@ class Battleship {
     InitializeMyFleet() {
         this.myFleet = gameController.InitializeShips();
 
-        console.log("Please position your fleet (Game board size is from A to H and 1 to 8) :");
+        console.log("Please position your fleet (Game board size is from A to Z and 1 to 26) :");
 
         this.myFleet.forEach(function (ship) {
             console.log();
