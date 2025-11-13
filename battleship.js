@@ -139,7 +139,7 @@ class Battleship {
             console.log(cliColor.yellow(`Rows and columns cannot exceed ${MAX_DIM}. Please enter values between 1 and ${MAX_DIM}.`));
             continue;
         }
-        else if (rows > MIN_DIM || cols > MIN_DIM) {
+        if (rows > MIN_DIM || cols > MIN_DIM) {
             console.log(cliColor.yellow('Rows and columns must be ${MIN_DIM} or more to fit all ships. Please enter a values greater than or equal to $MIN_DIM.'));
             continue;
         }
