@@ -151,7 +151,6 @@ printBoard(boardType, title) {
             console.log(cliColor.red(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (isHit ? `has hit your ship !` : `miss`)));
             if (isHit) {
                 beep();
-                this.hits=true;
                 console.log(cliColor.red("                \\         .  ./"));
                 console.log(cliColor.red("              \\      .:\";'.:..\"   /"));
                 console.log(cliColor.red("                  (M^^.^~~:.'\")."));
@@ -217,11 +216,13 @@ printBoard(boardType, title) {
     console.log(cliColor.green(`Board size set to ${cols} columns (A-${String.fromCharCode(64 + cols)}) and ${rows} rows.`));
     }
 
+
     static ParsePosition(input) {
-        var letter = letters.get(input.toUpperCase().substring(0, 1));
-        var number = parseInt(input.substring(1, 2), 10);
+        input = input.toUpperCase().trim();
+        var letter = letters.get(input[0]);          // first character = column
+        var number = parseInt(input.substring(1), 10);  // all remaining characters = row
         return new position(letter, number);
-    }
+      }
 
     GetRandomPosition() {
     const rndColumn = Math.floor(Math.random() * this.cols);
