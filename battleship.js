@@ -169,6 +169,7 @@ printBoard(boardType, title) {
     console.log("Configure your game board:");
 
     const MAX_DIM = 26;
+    const MIN_DIM = 5;
     const DEFAULT = 8;
 
     let rows, cols;
@@ -194,6 +195,14 @@ printBoard(boardType, title) {
             console.log(cliColor.yellow(`Rows and columns cannot exceed ${MAX_DIM}. Please enter values between 1 and ${MAX_DIM}.`));
             continue;
         }
+
+        // Validate: minimum 17 total spaces and at least one dimension must be 5 or more
+        const totalSpaces = rows * cols;
+        if (totalSpaces < 17 || (rows < 5 && cols < 5)) {
+            console.log(cliColor.yellow(`Board must have at least 17 total grid spaces and one dimension must be at least 5. Please try again.`));
+            continue;
+        }
+ 
 
         // valid values
         break;
