@@ -124,7 +124,8 @@ printBoard(boardType, title) {
 
             if (isHit) {
                 beep();
-
+                this.hits.push(position);  // <-- push the position object
+                console.log(cliColor.red("Yeah! Nice hit!"));
                 console.log(cliColor.red("                \\         .  ./"));
                 console.log(cliColor.red("              \\      .:\";'.:..\"   /"));
                 console.log(cliColor.red("                  (M^^.^~~:.'\")."));
@@ -134,7 +135,9 @@ printBoard(boardType, title) {
                 console.log(cliColor.red("                 -\\  \\     /  /-"));
                 console.log(cliColor.red("                   \\  \\   /  /"));
             }
-
+            this.misses.push(position); // <-- record a miss
+            console.log(cliColor.white("Miss"));
+    
             console.log(cliColor.red(isHit ? "Yeah ! Nice hit !" : "Miss"));
         
             
@@ -148,7 +151,7 @@ printBoard(boardType, title) {
             console.log(cliColor.red(`Computer shot in ${computerPos.column}${computerPos.row} and ` + (isHit ? `has hit your ship !` : `miss`)));
             if (isHit) {
                 beep();
-
+                this.hits=true;
                 console.log(cliColor.red("                \\         .  ./"));
                 console.log(cliColor.red("              \\      .:\";'.:..\"   /"));
                 console.log(cliColor.red("                  (M^^.^~~:.'\")."));
