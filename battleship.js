@@ -8,6 +8,60 @@ const letters = require("./GameController/letters.js");
 let telemetryWorker;
 
 class Battleship {
+
+   
+printBoard(boardType, title) {
+    console.log(cliColor.cyan(`\n=== ${title} ===`));
+
+    // Column headers
+    let header = "   ";
+    for (let c = 0; c < this.cols; c++) {
+        header += String.fromCharCode(65 + c) + " ";
+    }
+    console.log(cliColor.yellow(header));
+
+    // Each row
+    for (let r = 1; r <= this.rows; r++) {
+        let rowString = (r < 10 ? " " + r : r) + " ";
+        for (let c = 1; c <= this.cols; c++) {
+            const letter = String.fromCharCode(64 + c);
+            const pos = new position(letters.get(letter), r);
+            let symbol = "·"; // empty sea
+
+            // --- Safe helper to compare positions, even if some are strings ---
+            const samePos = (p) => {
+                if (!p) return false;
+                if (typeof p.equals === "function") return p.equals(pos);
+                if (typeof p === "string") return p.toUpperCase() === pos.toString().toUpperCase();
+                if (p.column && p.row) return p.column === pos.column && p.row === pos.row;
+                return false;
+            };
+
+            // Player's ships
+            if (boardType === "Player" && this.myFleet?.some(ship => ship.positions?.some(samePos))) {
+                symbol = cliColor.blue("■");
+            }
+
+            // Enemy ships (stay hidden unless hit)
+            if (boardType === "Enemy" && this.enemyFleet?.some(ship => ship.positions?.some(samePos))) {
+                symbol = "·";
+            }
+
+            // Show hits & misses
+            if (this.hits?.some(samePos)) {
+                symbol = cliColor.red("X");
+            } else if (this.misses?.some(samePos)) {
+                symbol = cliColor.white("o");
+            }
+
+            rowString += symbol + " ";
+        }
+        console.log(rowString);
+    }
+    console.log();
+}
+
+
     start() {
         telemetryWorker = new Worker("./TelemetryClient/telemetryClient.js");   
 
@@ -53,6 +107,8 @@ class Battleship {
 
         do {
             console.log();
+             this.printBoard("Player", "Your Fleet");
+            this.printBoard("Enemy", "Enemy Waters (hidden)");
             console.log("Player, it's your turn");
             console.log(cliColor.green("Type exit to quit the game, or your coordinates for your shot"));
             var answer = readline.question();
@@ -166,6 +222,8 @@ class Battleship {
     }
 
     InitializeGame() {
+        this.hits = [];
+        this.misses = [];
         this.InitializeMyFleet();
         this.InitializeEnemyFleet();
     }
